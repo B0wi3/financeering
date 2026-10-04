@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  mysql:
+    container_name: financeering-mysql
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: financeering
+      MYSQL_USER: finance
+      MYSQL_PASSWORD: admin
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+  keycloak:
+    container_name: financeering-keycloak
+    image: quay.io/keycloak/keycloak:22.0
+    command: start-dev
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+volumes:
+  mysql_data:
