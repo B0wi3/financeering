@@ -1,5 +1,6 @@
-package com.bowie.financeering.finance;
+package com.bowie.financeering.finance.model;
 
+import com.bowie.financeering.finance.model.ENUM.TransactionType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -8,8 +9,8 @@ import java.math.BigDecimal;
 import java.time.Instant;
 
 @Entity
-@Table(name = "finance")
-public class Finance {
+@Table(name = "transaction")
+public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,7 +44,7 @@ public class Finance {
     @Column(name = "created_at")
     private Instant createdAt;
 
-    public Finance() {
+    public Transaction() {
     }
 
     public Long getId() {
@@ -66,12 +67,12 @@ public class Finance {
         this.currency = currency;
     }
 
-    public TransactionType getType() {
+    public TransactionType getTransactionType() {
         return transactionType;
     }
 
-    public void setType(TransactionType type) {
-        this.transactionType = type;
+    public void setTransactionType(TransactionType transactionType) {
+        this.transactionType = transactionType;
     }
 
     public String getCategory() {

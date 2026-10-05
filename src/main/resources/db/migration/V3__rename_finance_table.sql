@@ -1,0 +1,1 @@
+ALTER TABLE finance RENAME TO transaction;

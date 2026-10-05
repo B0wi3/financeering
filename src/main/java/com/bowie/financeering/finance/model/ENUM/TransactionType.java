@@ -1,4 +1,4 @@
-package com.bowie.financeering.finance;
+package com.bowie.financeering.finance.model.ENUM;
 
 public enum TransactionType {
     EXPENSE,
