@@ -6,12 +6,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
-    List<Transaction> findByUserSub(String userSub);
-    List<Transaction> findByTransactionType(TransactionType type);
-    List<Transaction> findByCategory(String category);
+    Optional<Transaction> findById(Long id);
+    List<Transaction> findByTransactionType(TransactionType type, String userSub);
+    List<Transaction> findByCategory(String category, String userSub);
     List<Transaction> findByUserSubOrderByCreatedAtDesc(String userSub);
 }

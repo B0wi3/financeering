@@ -24,14 +24,18 @@ public class TransactionCreateDTO {
     @NotBlank
     private String category;
 
+    @NotBlank
+    private String userSub;
+
     public TransactionCreateDTO() {
     }
 
-    public TransactionCreateDTO(BigDecimal amount, String currency, TransactionType transactionType, String category) {
+    public TransactionCreateDTO(BigDecimal amount, String currency, TransactionType transactionType, String category, String userSub) {
         this.amount = amount;
         this.currency = currency;
         this.transactionType = transactionType;
         this.category = category;
+        this.userSub = userSub;
     }
 
     public BigDecimal getAmount() {

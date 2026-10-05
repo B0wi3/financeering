@@ -47,6 +47,14 @@ public class Transaction {
     public Transaction() {
     }
 
+    public Transaction(BigDecimal amount, String currency, TransactionType transactionType, String category, String userSub) {
+        this.amount = amount;
+        this.currency = currency;
+        this.transactionType = transactionType;
+        this.category = category;
+        this.userSub = userSub;
+    }
+
     public Long getId() {
         return id;
     }
