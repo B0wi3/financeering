@@ -1,7 +1,8 @@
 package com.bowie.financeering.finance;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -15,26 +16,30 @@ public class Finance {
     private Long id;
 
     @NotNull
+    @Positive
     @Column(name = "amount")
     private BigDecimal amount;
 
     @NotNull
+    @Pattern(regexp = "[A-Z]{3}")
     @Column(name = "currency", length = 3)
     private String currency;
 
     @NotNull
-    @Column(name = "type")
+    @Column(name = "transactionType")
     @Enumerated(EnumType.STRING)
-    private TransactionType type;
+    private TransactionType transactionType;
 
-    @NotNull
+    @NotBlank
     @Column(name = "category")
     private String category;
 
-    @NotNull
+    @NotBlank
     @Column(name = "user_sub")
     private String userSub;
 
+    @NotNull
+    @CreationTimestamp
     @Column(name = "created_at")
     private Instant createdAt;
 
@@ -62,11 +67,11 @@ public class Finance {
     }
 
     public TransactionType getType() {
-        return type;
+        return transactionType;
     }
 
     public void setType(TransactionType type) {
-        this.type = type;
+        this.transactionType = type;
     }
 
     public String getCategory() {
