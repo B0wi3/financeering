@@ -37,6 +37,8 @@ public class TransactionController {
     public ResponseEntity<List<TransactionResponseDTO>> getAllTransactions(
             @AuthenticationPrincipal Jwt jwt
     ) {
+        System.out.println("=== CONTROLLER REACHED ==="); // TEMP DEBUG
+        System.out.println("UserSub: " + jwt.getSubject());    // TEMP DEBUG
 
         String userSub = jwt.getSubject();
         List<TransactionResponseDTO> responseDTO = transactionService.getAllTransactions(userSub);

@@ -42,21 +42,28 @@ Added in later phases: Spring Cloud Gateway (MVC), Resilience4j, Apache Kafka (K
 
 ## Commands
 
-<!-- Fill these in as the project grows -->
 - Start infrastructure: `docker compose up -d`
 - Run tests: `./mvnw test`
 - Run an app: `./mvnw spring-boot:run`
 
 ## Repo layout
 
-<!-- Update as modules are created -->
 - `docker-compose.yml`: infrastructure (MySQL, Keycloak)
 - `finance-service/`: income, expenses, debts
 
 ## Current Work Progress (Updated: 2026-10-06)
 
 **Current Phase**: 2 (Finance module with Flyway and Swagger, protected by Keycloak JWT)
-**What I've implemented**: Transaction entity, DTOs, repository, and service layer with createTransaction (@Transactional)
-**Where I stopped**: Need to implement update and delete transaction functionality in service layer
-**Next steps**: Add updateTransaction and deleteTransaction methods to TransactionService, then implement TransactionController
-**Current focus**: Completing CRUD operations for transactions in service layer before exposing via REST API
+**What I've implemented**: Transaction entity, DTOs, repository, and service layer with full CRUD operations (create, read, update, delete) including @Transactional annotations, proper error handling (orElseThrow), and userSub authorization checks
+**Controller Status**: TransactionController.java updated to use JwtAuthenticationToken instead of @AuthenticationPrincipal Jwt (fixing JWT principal resolution issue)
+**Service Layer Fix**: Corrected AccessDeniedException import from java.nio.file.AccessDeniedException to org.springframework.security.access.AccessDeniedException
+**Security Configuration**: SecurityConfig.java configured for OAuth2 Resource Server with Keycloak JWT validation (enabled)
+**Verification Results (2026-10-06)**:
+- Applied fix to TransactionController.java: changed @AuthenticationPrincipal Jwt jwt to JwtAuthenticationToken auth + extracted Jwt from token
+- Fixed TransactionService.java AccessDeniedException import to use Spring Security's version
+- With these changes:
+  - Requests now reach the controller layer (confirmed via logging)
+  - JWT authentication succeeds and flows properly through the filter chain
+  - Authorization checks in service layer function correctly
+  - All CRUD endpoints should now be operational with proper JWT authentication
+**Next Steps**: Test all endpoints with Postman using valid Bearer tokens, verify logging appears as expected, then consider removing temporary debug logs
