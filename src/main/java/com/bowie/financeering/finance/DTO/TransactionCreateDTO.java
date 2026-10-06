@@ -24,9 +24,6 @@ public class TransactionCreateDTO {
     @NotBlank
     private String category;
 
-    @NotBlank
-    private String userSub;
-
     public TransactionCreateDTO() {
     }
 
@@ -35,7 +32,6 @@ public class TransactionCreateDTO {
         this.currency = currency;
         this.transactionType = transactionType;
         this.category = category;
-        this.userSub = userSub;
     }
 
     public BigDecimal getAmount() {

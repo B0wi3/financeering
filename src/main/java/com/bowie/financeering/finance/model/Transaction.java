@@ -50,9 +50,10 @@ public class Transaction {
     public Transaction(BigDecimal amount, String currency, TransactionType transactionType, String category, String userSub) {
         this.amount = amount;
         this.currency = currency;
-        this.transactionType = transactionType;
+        this.transactionType = TransactionType.valueOf(transactionType.name().toUpperCase());
         this.category = category;
         this.userSub = userSub;
+        this.createdAt = Instant.now();
     }
 
     public Long getId() {
@@ -80,7 +81,7 @@ public class Transaction {
     }
 
     public void setTransactionType(TransactionType transactionType) {
-        this.transactionType = transactionType;
+        this.transactionType = TransactionType.valueOf(transactionType.name().toUpperCase());
     }
 
     public String getCategory() {
