@@ -38,7 +38,7 @@ Added in later phases: Spring Cloud Gateway (MVC), Resilience4j, Apache Kafka (K
 5. Kafka with the transactional outbox pattern; split out market-data-service.
 6. notification and reporting services, then observability.
 
-**Current phase: 1**
+**Current phase: 2**
 
 ## Commands
 
@@ -52,3 +52,11 @@ Added in later phases: Spring Cloud Gateway (MVC), Resilience4j, Apache Kafka (K
 <!-- Update as modules are created -->
 - `docker-compose.yml`: infrastructure (MySQL, Keycloak)
 - `finance-service/`: income, expenses, debts
+
+## Current Work Progress (Updated: 2026-10-06)
+
+**Current Phase**: 2 (Finance module with Flyway and Swagger, protected by Keycloak JWT)
+**What I've implemented**: Transaction entity, DTOs, repository, and service layer with createTransaction (@Transactional)
+**Where I stopped**: Need to implement update and delete transaction functionality in service layer
+**Next steps**: Add updateTransaction and deleteTransaction methods to TransactionService, then implement TransactionController
+**Current focus**: Completing CRUD operations for transactions in service layer before exposing via REST API
