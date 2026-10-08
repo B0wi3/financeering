@@ -1,6 +1,6 @@
-package com.bowie.financeering.finance.model;
+package com.bowie.financeering.transaction.model;
 
-import com.bowie.financeering.finance.model.ENUM.TransactionType;
+import com.bowie.financeering.transaction.model.ENUM.TransactionType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -22,7 +22,7 @@ public class Transaction {
     private BigDecimal amount;
 
     @NotNull
-    @Pattern(regexp = "[A-Z]{3}")
+    @Pattern(regexp = "(BRL|USD|EUR)")
     @Column(name = "currency", length = 3)
     private String currency;
 

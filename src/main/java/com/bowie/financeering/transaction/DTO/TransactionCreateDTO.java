@@ -1,6 +1,6 @@
-package com.bowie.financeering.finance.DTO;
+package com.bowie.financeering.transaction.DTO;
 
-import com.bowie.financeering.finance.model.ENUM.TransactionType;
+import com.bowie.financeering.transaction.model.ENUM.TransactionType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -15,7 +15,7 @@ public class TransactionCreateDTO {
     private BigDecimal amount;
 
     @NotNull
-    @Pattern(regexp = "[A-Z]{3}")
+    @Pattern(regexp = "(BRL|USD|EUR)")
     private String currency;
 
     @NotNull

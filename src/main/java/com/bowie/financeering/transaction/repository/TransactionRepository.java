@@ -1,7 +1,7 @@
-package com.bowie.financeering.finance.repository;
+package com.bowie.financeering.transaction.repository;
 
-import com.bowie.financeering.finance.model.ENUM.TransactionType;
-import com.bowie.financeering.finance.model.Transaction;
+import com.bowie.financeering.transaction.model.ENUM.TransactionType;
+import com.bowie.financeering.transaction.model.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

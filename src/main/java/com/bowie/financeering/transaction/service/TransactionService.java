@@ -1,10 +1,10 @@
-package com.bowie.financeering.finance.service;
+package com.bowie.financeering.transaction.service;
 
-import com.bowie.financeering.finance.DTO.TransactionCreateDTO;
-import com.bowie.financeering.finance.DTO.TransactionResponseDTO;
-import com.bowie.financeering.finance.DTO.TransactionUpdateDTO;
-import com.bowie.financeering.finance.model.Transaction;
-import com.bowie.financeering.finance.repository.TransactionRepository;
+import com.bowie.financeering.transaction.DTO.TransactionCreateDTO;
+import com.bowie.financeering.transaction.DTO.TransactionResponseDTO;
+import com.bowie.financeering.transaction.DTO.TransactionUpdateDTO;
+import com.bowie.financeering.transaction.model.Transaction;
+import com.bowie.financeering.transaction.repository.TransactionRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;

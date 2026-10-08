@@ -1,4 +1,4 @@
-package com.bowie.financeering.finance.config;
+package com.bowie.financeering.transaction.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
