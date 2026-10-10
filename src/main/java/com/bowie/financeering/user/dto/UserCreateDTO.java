@@ -7,9 +7,6 @@ import jakarta.validation.constraints.Pattern;
 
 public class UserCreateDTO {
 
-    @Id
-    private String userSub;
-
     @NotNull
     @Pattern(regexp = "(BRL|USD|EUR)")
     private String currency;
@@ -21,18 +18,9 @@ public class UserCreateDTO {
     public UserCreateDTO() {
     }
 
-    public UserCreateDTO(String userSub, String currency, String locale) {
-        this.userSub = userSub;
+    public UserCreateDTO(String currency, String locale) {
         this.currency = currency;
         this.locale = locale;
-    }
-
-    public String getUserSub() {
-        return userSub;
-    }
-
-    public void setUserSub(String userSub) {
-        this.userSub = userSub;
     }
 
     public String getCurrency() {

@@ -51,14 +51,24 @@ Added in later phases: Spring Cloud Gateway (MVC), Resilience4j, Apache Kafka (K
 - `docker-compose.yml`: infrastructure (MySQL, Keycloak)
 - `finance-service/`: income, expenses, debts
 
-## Current Work Progress (Updated: 2026-10-06)
+## Current Work Progress (Updated: 2026-10-09)
 
-**Current Phase**: 2 (Finance module with Flyway and Swagger, protected by Keycloak JWT)
-**What I've implemented**: Transaction entity, DTOs, repository, service layer, and controller with full CRUD operations (create, read, update, delete) including @Transactional annotations, proper error handling (orElseThrow), and userSub authorization checks
+**Current Phase**: 2 (Finance module with Flyway and Swagger, protected by Keycloak JWT) - with early progress on Phase 4 (User module)
+**What I've implemented**: 
+- **Transaction module (finance-service)**: Complete - entity, DTOs, repository, service layer, and controller with full CRUD operations (create, read, update, delete) including @Transactional annotations, proper error handling (orElseThrow), and userSub authorization checks
+- **User module (user-service)**: Significant progress - entity, repository, DTOs (Create, Update, Response), and service layer implemented; controller pending
 **Persistent Issue**: RESOLVED - Transaction enum values now correctly store and retrieve as uppercase (EXPENSE/INCOME) in database
 **Fix Applied**: Corrected column mapping in Transaction entity from `@Column(name = "transactionType")` to `@Column(name = "transaction_type")` to match Flyway migrations
 **Verification**: Confirmed proper enum persistence through manual testing and integration tests
-**Controller Status**: TransactionController.java fully implemented with all CRUD endpoints at /api/finance/** (GET, POST, PUT, DELETE) using JwtAuthenticationToken for proper JWT principal extraction
-**Service Layer Fix**: Corrected AccessDeniedException import from java.nio.file.AccessDeniedException to org.springframework.security.access.AccessDeniedException
+**Controller Status**: 
+- TransactionController.java fully implemented with all CRUD endpoints at /api/finance/** (GET, POST, PUT, DELETE) using JwtAuthenticationToken for proper JWT principal extraction
+- UserController.java pending creation (will implement CRUD endpoints at /api/user/**)
+**Service Layer Status**: 
+- TransactionService.java corrected AccessDeniedException import and implements all CRUD operations with @Transactional
+- UserService.java implemented with getUserById, createUser, updateUser, deleteUser methods (update/delete currently accept User entity; future refinement may use DTOs)
 **Security Configuration**: SecurityConfig.java configured for OAuth2 Resource Server with Keycloak JWT validation (enabled)
-**Next Steps**: Verify actual database storage values, check for database-level interference, confirm JSON deserialization behavior, and investigate Hibernate field vs property access impact
+**Next Steps**: 
+1. Complete user module by implementing UserController.java with REST endpoints and updating all methods to use UserDTOs instead of User entity
+2. Refine user service update/delete methods to accept DTOs instead of entities for better API contract
+3. Verify all user module functionality through manual testing and integration tests
+4. Begin Phase 3: Implement API Gateway (Spring Cloud Gateway MVC) for JWT validation and routing
