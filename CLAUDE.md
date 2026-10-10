@@ -55,13 +55,9 @@ Added in later phases: Spring Cloud Gateway (MVC), Resilience4j, Apache Kafka (K
 
 **Current Phase**: 2 (Finance module with Flyway and Swagger, protected by Keycloak JWT)
 **What I've implemented**: Transaction entity, DTOs, repository, service layer, and controller with full CRUD operations (create, read, update, delete) including @Transactional annotations, proper error handling (orElseThrow), and userSub authorization checks
-**Persistent Issue**: Despite enforcing uppercase enum values in Transaction constructor and setter, the database stores transaction_type values as lowercase regardless of input case, causing ConstraintViolationException when Hibernate attempts to convert lowercase database values back to enum
-**Transaction Entity Fix Attempted**: Applied uppercase enforcement in constructor and setter via `TransactionType.valueOf(transactionType.name().toUpperCase())`
-**Root Cause Investigation Needed**: 
-- Constructor/setter fixes may be bypassed due to Hibernate field access (@Id on field)
-- Database may have triggers, defaults, or configuration forcing lowercase storage
-- JSON deserialization may not be working as expected
-- Hibernate enum handling may not be respecting @Enumerated(Annotation)
+**Persistent Issue**: RESOLVED - Transaction enum values now correctly store and retrieve as uppercase (EXPENSE/INCOME) in database
+**Fix Applied**: Corrected column mapping in Transaction entity from `@Column(name = "transactionType")` to `@Column(name = "transaction_type")` to match Flyway migrations
+**Verification**: Confirmed proper enum persistence through manual testing and integration tests
 **Controller Status**: TransactionController.java fully implemented with all CRUD endpoints at /api/finance/** (GET, POST, PUT, DELETE) using JwtAuthenticationToken for proper JWT principal extraction
 **Service Layer Fix**: Corrected AccessDeniedException import from java.nio.file.AccessDeniedException to org.springframework.security.access.AccessDeniedException
 **Security Configuration**: SecurityConfig.java configured for OAuth2 Resource Server with Keycloak JWT validation (enabled)

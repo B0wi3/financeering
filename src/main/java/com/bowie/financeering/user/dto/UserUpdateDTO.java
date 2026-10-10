@@ -1,45 +1,25 @@
-package com.bowie.financeering.user.model;
+package com.bowie.financeering.user.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
-@Entity
-@Table(name = "users")
-public class User {
-
-    @Id
-    private String userSub;
+public class UserUpdateDTO {
 
     @NotNull
     @Pattern(regexp = "(BRL|USD|EUR)")
-    @Column(name = "currency", length = 3)
     private String currency;
 
     @NotBlank
     @Pattern(regexp = "([a-z]{2}[_]?[A-Z]{2}?)")
-    @Column(name = "locale")
     private String locale;
 
-    public User() {
+    public UserUpdateDTO() {
     }
 
-    public User(String userSub, String currency, String locale) {
-        this.userSub = userSub;
+    public UserUpdateDTO(String currency, String locale) {
         this.currency = currency;
         this.locale = locale;
-    }
-
-    public String getUserSub() {
-        return userSub;
-    }
-
-    public void setUserSub(String userSub) {
-        this.userSub = userSub;
     }
 
     public String getCurrency() {

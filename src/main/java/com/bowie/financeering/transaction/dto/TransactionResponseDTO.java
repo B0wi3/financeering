@@ -1,4 +1,4 @@
-package com.bowie.financeering.transaction.DTO;
+package com.bowie.financeering.transaction.dto;
 
 import com.bowie.financeering.transaction.model.ENUM.TransactionType;
 import jakarta.validation.constraints.NotBlank;

@@ -1,4 +1,4 @@
-package com.bowie.financeering.transaction.DTO;
+package com.bowie.financeering.transaction.dto;
 
 import com.bowie.financeering.transaction.model.ENUM.TransactionType;
 import jakarta.validation.constraints.NotBlank;
@@ -8,14 +8,14 @@ import jakarta.validation.constraints.Positive;
 
 import java.math.BigDecimal;
 
-public class TransactionUpdateDTO {
+public class TransactionCreateDTO {
 
     @NotNull
     @Positive
     private BigDecimal amount;
 
     @NotNull
-    @Pattern(regexp = "[A-Z]{3}")
+    @Pattern(regexp = "(BRL|USD|EUR)")
     private String currency;
 
     @NotNull
@@ -24,10 +24,10 @@ public class TransactionUpdateDTO {
     @NotBlank
     private String category;
 
-    public TransactionUpdateDTO() {
+    public TransactionCreateDTO() {
     }
 
-    public TransactionUpdateDTO(BigDecimal amount, String currency, TransactionType transactionType, String category) {
+    public TransactionCreateDTO(BigDecimal amount, String currency, TransactionType transactionType, String category, String userSub) {
         this.amount = amount;
         this.currency = currency;
         this.transactionType = transactionType;

@@ -1,12 +1,14 @@
 package com.bowie.financeering.transaction.service;
 
-import com.bowie.financeering.transaction.DTO.TransactionCreateDTO;
-import com.bowie.financeering.transaction.DTO.TransactionResponseDTO;
-import com.bowie.financeering.transaction.DTO.TransactionUpdateDTO;
+import com.bowie.financeering.transaction.dto.TransactionCreateDTO;
+import com.bowie.financeering.transaction.dto.TransactionResponseDTO;
+import com.bowie.financeering.transaction.dto.TransactionUpdateDTO;
 import com.bowie.financeering.transaction.model.Transaction;
 import com.bowie.financeering.transaction.repository.TransactionRepository;
+import com.bowie.financeering.user.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.security.access.AccessDeniedException;
 
@@ -16,11 +18,8 @@ import java.util.stream.Collectors;
 @Service
 public class TransactionService {
 
-    private final TransactionRepository transactionRepository;
-
-    public TransactionService(TransactionRepository transactionRepository) {
-        this.transactionRepository = transactionRepository;
-    }
+    @Autowired
+    public TransactionRepository transactionRepository;
 
     public TransactionResponseDTO getTransactionById(Long id, String userSub) throws AccessDeniedException {
         Transaction transaction = transactionRepository.findById(id).orElseThrow(

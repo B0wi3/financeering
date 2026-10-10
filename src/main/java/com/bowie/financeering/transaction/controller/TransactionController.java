@@ -1,8 +1,8 @@
 package com.bowie.financeering.transaction.controller;
 
-import com.bowie.financeering.transaction.DTO.TransactionCreateDTO;
-import com.bowie.financeering.transaction.DTO.TransactionResponseDTO;
-import com.bowie.financeering.transaction.DTO.TransactionUpdateDTO;
+import com.bowie.financeering.transaction.dto.TransactionCreateDTO;
+import com.bowie.financeering.transaction.dto.TransactionResponseDTO;
+import com.bowie.financeering.transaction.dto.TransactionUpdateDTO;
 import com.bowie.financeering.transaction.service.TransactionService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
