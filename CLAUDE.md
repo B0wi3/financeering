@@ -4,7 +4,7 @@ A personal finance app (income, expenses, debts, investments). This is a **learn
 
 ## How to work with me
 
-I'm a Jr. development analyst. I rarely code at work and I'm rusty, so explain things in plain language and say *why*, not just *what*.
+I'm a Jr. development analyst. I rarely code at work and I'm rusty, so explain things in plain language and say *why*, not just *what_.
 
 - **Do not write the implementation for me.** I write the code. Your job is to mentor and review.
 - Explain concepts, point me to the right docs, and ask guiding questions before giving answers.
@@ -51,24 +51,36 @@ Added in later phases: Spring Cloud Gateway (MVC), Resilience4j, Apache Kafka (K
 - `docker-compose.yml`: infrastructure (MySQL, Keycloak)
 - `finance-service/`: income, expenses, debts
 
-## Current Work Progress (Updated: 2026-10-09)
+## Current Work Progress (Updated: 2026-10-12)
 
-**Current Phase**: 2 (Finance module with Flyway and Swagger, protected by Keycloak JWT) - with early progress on Phase 4 (User module)
+**Current Phase**: 2 (Finance module with Flyway and Swagger, protected by Keycloak JWT) - with ongoing work on Phase 4 (User module) and authentication flow implementation
 **What I've implemented**: 
 - **Transaction module (finance-service)**: Complete - entity, DTOs, repository, service layer, and controller with full CRUD operations (create, read, update, delete) including @Transactional annotations, proper error handling (orElseThrow), and userSub authorization checks
-- **User module (user-service)**: Significant progress - entity, repository, DTOs (Create, Update, Response), and service layer implemented; controller pending
+- **User module (user-service)**: Substantial progress - entity, repository, DTOs (Create, Update, Response), service layer refined to use DTOs, and UserController implemented with CREATE, READ ALL, READ ONE, and UPDATE endpoints
+**Authentication Integration**: 
+- Keycloak configured as OAuth2 Resource Server for JWT validation
+- Understanding of proper auth flow: Keycloak handles user authentication, application manages profile data (currency, locale)
+- Identified need to configure Spring Security as both OIDC Client (for login flow) and Resource Server (for token validation)
+- Resolved port conflict between Keycloak (8080) and application (planning to run on 8081)
 **Persistent Issue**: RESOLVED - Transaction enum values now correctly store and retrieve as uppercase (EXPENSE/INCOME) in database
 **Fix Applied**: Corrected column mapping in Transaction entity from `@Column(name = "transactionType")` to `@Column(name = "transaction_type")` to match Flyway migrations
 **Verification**: Confirmed proper enum persistence through manual testing and integration tests
 **Controller Status**: 
 - TransactionController.java fully implemented with all CRUD endpoints at /api/finance/** (GET, POST, PUT, DELETE) using JwtAuthenticationToken for proper JWT principal extraction
-- UserController.java pending creation (will implement CRUD endpoints at /api/user/**)
+- UserController.java created with POST, GET (all), GET (by id), and PUT endpoints (DELETE endpoint pending; security refinements needed on GET endpoints - specifically, GET endpoints incorrectly use @PathVariable for userSub instead of extracting from JWT)
 **Service Layer Status**: 
 - TransactionService.java corrected AccessDeniedException import and implements all CRUD operations with @Transactional
-- UserService.java implemented with getUserById, createUser, updateUser, deleteUser methods (update/delete currently accept User entity; future refinement may use DTOs)
+- UserService.java refined to accept/return DTOs instead of entities for better API contract; authorization checks implemented in updateUser; createUser and getUserById/getAllUsers require security enhancements
 **Security Configuration**: SecurityConfig.java configured for OAuth2 Resource Server with Keycloak JWT validation (enabled)
 **Next Steps**: 
-1. Complete user module by implementing UserController.java with REST endpoints and updating all methods to use UserDTOs instead of User entity
-2. Refine user service update/delete methods to accept DTOs instead of entities for better API contract
-3. Verify all user module functionality through manual testing and integration tests
-4. Begin Phase 3: Implement API Gateway (Spring Cloud Gateway MVC) for JWT validation and routing
+1. Implement DELETE endpoint in UserController.java
+2. Add authorization checks to UserService.getUserById() and refine getAllUsers() to prevent unauthorized data access
+3. Fix UserController GET endpoints to extract userSub from JWT instead of @PathVariable
+4. Verify all user module functionality through manual testing and integration tests
+5. Begin Phase 3: Implement API Gateway (Spring Cloud Gateway MVC) for JWT validation and routing
+6. **Authentication Enhancement Plan**:
+   - Enable Keycloak self-registration for account creation
+   - Configure Spring Boot app to run on port 8081 (to avoid conflict with Keycloak on 8080)
+   - Implement post-login flow to auto-create user profiles with browser-detected locale/currency
+   - Extract locale from Accept-Language header and map to currency (en_US→USD, pt_BR→BRL, etc.)
+   - Allow users to override auto-detected values via profile update endpoint

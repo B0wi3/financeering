@@ -8,12 +8,9 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("api/user")
@@ -34,23 +31,23 @@ public class UserController {
         return ResponseEntity.ok(responseDTO);
     }
 
-    @GetMapping
-    public ResponseEntity<List<UserResponseDTO>> getAllUsers(
-            @AuthenticationPrincipal Jwt jwt
-    ) {
-
-        String userSub = jwt.getSubject();
-        List<UserResponseDTO> responseDTO = userService.getAllUsers(userSub);
-
-        return ResponseEntity.ok(responseDTO);
-    }
+//    @GetMapping
+//    public ResponseEntity<List<UserResponseDTO>> getAllUsers(
+//            @AuthenticationPrincipal Jwt jwt
+//    ) {
+//
+//        String userSub = jwt.getSubject();
+//        List<UserResponseDTO> responseDTO = userService.getAllUsers(userSub);
+//
+//        return ResponseEntity.ok(responseDTO);
+//    }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDTO> getUserById(
-            @PathVariable String userSub,
             @AuthenticationPrincipal Jwt jwt
     ) throws EntityNotFoundException {
 
+        String userSub = jwt.getSubject();
         UserResponseDTO responseDTO = userService.getUserById(userSub);
 
         return ResponseEntity.ok(responseDTO);

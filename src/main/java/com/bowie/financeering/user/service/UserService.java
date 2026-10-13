@@ -19,19 +19,19 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<UserResponseDTO> getAllUsers(String userSub) throws AccessDeniedException {
-        if (!userRepository.existsById(userSub)) {
-            throw new AccessDeniedException("User does not exist");
-        }
+//    public List<UserResponseDTO> getAllUsers(String userSub) throws AccessDeniedException {
+//        if (!userRepository.existsById(userSub)) {
+//            throw new AccessDeniedException("User does not exist");
+//        }
+//
+//        List<User> users = userRepository.findAll();
+//
+//        return users.stream()
+//                .map(this::toResponseDto)
+//                .collect(Collectors.toList());
+//    }
 
-        List<User> users = userRepository.findAll();
-
-        return users.stream()
-                .map(this::toResponseDto)
-                .collect(Collectors.toList());
-    }
-
-    public UserResponseDTO getUserById(String userSub) throws EntityNotFoundException {
+    public UserResponseDTO getUserById(String userSub) throws EntityNotFoundException, AccessDeniedException {
         User user = userRepository.findById(userSub).orElseThrow(
                 () -> new EntityNotFoundException("User not found")
         );
