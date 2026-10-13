@@ -10,26 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 public class UserService {
 
     @Autowired
     private UserRepository userRepository;
-
-//    public List<UserResponseDTO> getAllUsers(String userSub) throws AccessDeniedException {
-//        if (!userRepository.existsById(userSub)) {
-//            throw new AccessDeniedException("User does not exist");
-//        }
-//
-//        List<User> users = userRepository.findAll();
-//
-//        return users.stream()
-//                .map(this::toResponseDto)
-//                .collect(Collectors.toList());
-//    }
 
     public UserResponseDTO getUserById(String userSub) throws EntityNotFoundException, AccessDeniedException {
         User user = userRepository.findById(userSub).orElseThrow(
@@ -40,6 +25,10 @@ public class UserService {
     }
 
     public UserResponseDTO createUser(UserCreateDTO dto, String userSub) {
+        if (userRepository.existsById(userSub)) {
+            throw new IllegalArgumentException("User already exists");
+        }
+
         User user = new User(
                 userSub,
                 dto.getCurrency(),
@@ -67,12 +56,10 @@ public class UserService {
         return toResponseDto(user);
     }
 
-    public void deleteUser(String userSub, String requestSub) throws  EntityNotFoundException {
+    public void deleteCurrentUser(String userSub) throws  EntityNotFoundException {
         User user = userRepository.findById(userSub).orElseThrow(
                 () -> new EntityNotFoundException("User not found")
         );
-
-        // TODO: Only admins should have this permission
 
         userRepository.delete(user);
     }

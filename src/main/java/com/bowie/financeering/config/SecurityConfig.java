@@ -1,4 +1,4 @@
-package com.bowie.financeering.transaction.config;
+package com.bowie.financeering.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,16 +16,12 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/api/finance/**").authenticated()
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/**").authenticated()
                         .anyRequest().permitAll()
                 )
-                .oauth2ResourceServer(oauth2 -> oauth2
-                        .jwt(jwt -> jwt
-                                .jwtAuthenticationConverter(jwtAuthenticationConverter())
-                        )
-                )
-                .httpBasic(Customizer.withDefaults());
+                .oauth2ResourceServer(oauth -> oauth
+                        .jwt(Customizer.withDefaults()));
 
         return http.build();
     }

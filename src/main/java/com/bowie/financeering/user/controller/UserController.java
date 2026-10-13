@@ -7,6 +7,7 @@ import com.bowie.financeering.user.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -28,22 +29,13 @@ public class UserController {
         String userSub = jwt.getSubject();
         UserResponseDTO responseDTO = userService.createUser(dto, userSub);
 
-        return ResponseEntity.ok(responseDTO);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(responseDTO);
     }
 
-//    @GetMapping
-//    public ResponseEntity<List<UserResponseDTO>> getAllUsers(
-//            @AuthenticationPrincipal Jwt jwt
-//    ) {
-//
-//        String userSub = jwt.getSubject();
-//        List<UserResponseDTO> responseDTO = userService.getAllUsers(userSub);
-//
-//        return ResponseEntity.ok(responseDTO);
-//    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<UserResponseDTO> getUserById(
+    @GetMapping
+    public ResponseEntity<UserResponseDTO> getCurrentUser(
             @AuthenticationPrincipal Jwt jwt
     ) throws EntityNotFoundException {
 
@@ -65,15 +57,14 @@ public class UserController {
         return ResponseEntity.ok(responseDTO);
     }
 
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<UserResponseDTO> deleteUser(
-//            @PathVariable String userSub,
-//            @AuthenticationPrincipal Jwt jwt
-//    ) throws AccessDeniedException {
-//
-//        String requestSub = jwt.getSubject();
-//        userService.deleteUser(userSub, requestSub);
-//
-//        return ResponseEntity.noContent().build();
-//    }
+    @DeleteMapping
+    public ResponseEntity<Void> deleteUser(
+            @AuthenticationPrincipal Jwt jwt
+    ) {
+
+        String userSub = jwt.getSubject();
+        userService.deleteCurrentUser(userSub);
+
+        return ResponseEntity.noContent().build();
+    }
 }

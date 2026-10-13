@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
     Optional<Transaction> findById(Long id);
-    List<Transaction> findByTransactionType(TransactionType type, String userSub);
-    List<Transaction> findByCategory(String category, String userSub);
+    List<Transaction> findByTransactionTypeAndUserSub(TransactionType type, String userSub);
+    List<Transaction> findByCategoryAndUserSub(String category, String userSub);
     List<Transaction> findByUserSubOrderByCreatedAtDesc(String userSub);
 }
