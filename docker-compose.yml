@@ -15,13 +15,17 @@ services:
   keycloak:
     container_name: financeering-keycloak
     image: quay.io/keycloak/keycloak:22.0
-    command: start-dev
+    command: start-dev --import-realm
     environment:
       KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-financepwd}
     ports:
       - "8080:8080"
+    volumes:
+      - keycloak_data:/opt/keycloak/data
+      - ./keycloak/realm:/opt/keycloak/data/import:ro
     depends_on:
       - mysql
 volumes:
   mysql_data:
+  keycloak_data:
